@@ -1,0 +1,78 @@
+html {
+    box-sizing: border-box;
+    background-image: url("https://images.theconversation.com/files/275002/original/file-20190516-69195-1yg53ff.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1200&h=1200.0&fit=crop");
+    font-family: 'Architects Daughter', cursive;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+.game {
+    display: flex;
+    flex-flow: column;
+    margin: 50px auto;
+    max-width: 700px;
+    box-shadow: 0 15px 45px 0 rgba(27, 36, 52, .15);
+    border-radius: 6px;
+    padding: 20px;
+    background: rgba(186, 186, 186, 0.58);
+    text-align: justify;
+    align-content: center;
+}
+
+h1 {
+    text-align: center;
+    color: white;
+    font-size: 60px;
+    margin: 15px 0 0;
+}
+
+h2 {
+    text-align: center;
+    color: white;
+    font-size: 40px;
+    margin: 15px 0 15px;
+}
+
+.buttons {
+    display: flex;
+    flex-flow: column;
+    margin: 0 auto;
+    width: 300px;
+}
+
+button {
+    height: 50px;
+    margin: 10px 0;
+    box-shadow: 0 15px 45px 0 rgba(27, 36, 52, .15);
+    font-family: 'Architects Daughter', cursive;
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.family-member {
+   font-size: 30px; 
+}
+
+.locked {
+    background: pink;
+}
+
+.unlocked {
+    background: grey;
+}
+
+.to-unlock {
+    color: yellow;
+}
+
+.object-cos {
+    width: 200px;
+    height: 300px;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
