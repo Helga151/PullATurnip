@@ -69,10 +69,8 @@ button {
     color: yellow;
 }
 
-.object-cos {
-    width: 200px;
-    height: 300px;
+.turnip {
     position: fixed;
-    top: 0;
-    left: 0;
+    background-size: cover; 
+    background-position: center;
 }
