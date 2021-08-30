@@ -1,3 +1,4 @@
+//-----------------functions-------------------------//
 function getRandom(min, max) {
     return Math.random() * (max - min) + min;
 }
@@ -16,7 +17,6 @@ function search() {
             costs.forEach(cost => {
                 if (cost.parentElement === this) {
                     cost.textContent = value * multiplierCost;
-                    //console.log(cost);
                 }
             });
 
@@ -30,17 +30,9 @@ function search() {
                 score++;
                 scoreText.textContent = score;
             }, perSecondIntervalTime);
-
-            console.log({
-                score,
-                value,
-                perSecond
-            });
-            console.log(this);
         }
     }
     else {
-        //console.log(value);
         score += value;
     }
     scoreText.textContent = score;
@@ -55,7 +47,6 @@ function getNewTurnip() {
     let maxWidth = Math.max(minTurnipWidth * getRandom(0.02, 0.03) * getRandom(1, 2.25), 60);
     let width = getRandom(minWidth, maxWidth);
     let height = width * 2; //I made drawing that height is nearly 2 times longer that width
-    console.log({minWidth, maxWidth, width});
     
     turnip.style.height = `${height}px`;
     turnip.style.width = `${width}px`;
@@ -63,13 +54,24 @@ function getNewTurnip() {
     //position of a turnip; to not touch the edges I took a 10px border
     let maxTop = Math.max(window.innerHeight - height - 10, 10);
     let maxLeft = Math.max(window.innerWidth - width - 10, 10);
+    
+    let top = Math.floor(getRandom(10, maxTop));
+    let left = Math.floor(getRandom(10, maxLeft));
+    
+    //initialize new coordinates if old ones are inside "game" object; 
+    //top + height >= gameObejct.offsetTop <- bottom of the picture can't be inside;  analogically left + width
+    while((top + height >= gameObejct.offsetTop && top <= gameObejct.offsetTop + gameObejct.offsetHeight) && (left + width >= gameObejct.offsetLeft && left <= gameObejct.offsetLeft + gameObejct.offsetWidth)) {
+        console.log('nie', {top, left});
+        top = Math.floor(getRandom(10, maxTop));
+        left = Math.floor(getRandom(10, maxLeft));
+    }
+    console.log({top, left});
 
-    turnip.style.top = `${Math.floor(getRandom(10, maxTop))}px`;
-    turnip.style.left = `${Math.floor(getRandom(10, maxLeft))}px`;
+    turnip.style.top = `${top}px`;
+    turnip.style.left = `${left}px`;
     turnip.style.transform = `rotate(${getRandom(-45, 45)}deg)`;
 
     let turnipUrl = turnipPictures[Math.floor(getRandom(0, turnipPictures.length))];
-    //console.log({turnipUrl});
     turnip.style.backgroundImage = `url(${turnipUrl})`;
 
     turnip.classList.add('turnip');
@@ -93,13 +95,12 @@ function onClickAddScore() {
 function setRandomTurnipTimeout() {
     getNewTurnip();
     let timeout = getRandom(minTuripTimeout, maxTuripTimeout);
-    console.log({timeout});
     setTimeout(setRandomTurnipTimeout, timeout);
 }
 
 //-----------------command lines-------------------------//
 
-setTimeout(setRandomTurnipTimeout, getRandom(500, 3000));
+setTimeout(setRandomTurnipTimeout, getRandom(500, 3000)); //show the first turnip
 
 setInterval(() => {
     document.title = `${score} money - Clicker`; //update title
