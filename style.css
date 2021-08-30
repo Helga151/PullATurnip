@@ -53,6 +53,10 @@ button {
     font-weight: 500;
 }
 
+.clicking {
+    cursor: pointer;
+}
+
 .family-member {
    font-size: 30px; 
 }
@@ -67,10 +71,12 @@ button {
 
 .to-unlock {
     color: yellow;
+    cursor: pointer;
 }
 
 .turnip {
     position: fixed;
     background-size: cover; 
     background-position: center;
+    cursor: pointer;
 }
