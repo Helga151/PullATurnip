@@ -60,7 +60,16 @@ function getNewTurnip() {
     
     //initialize new coordinates if old ones are inside "game" object; 
     //top + height >= gameObejct.offsetTop <- bottom of the picture can't be inside;  analogically left + width
-    while((top + height >= gameObejct.offsetTop && top <= gameObejct.offsetTop + gameObejct.offsetHeight) && (left + width >= gameObejct.offsetLeft && left <= gameObejct.offsetLeft + gameObejct.offsetWidth)) {
+    while (((top + height >= gameObejct.offsetTop && top <= gameObejct.offsetTop + gameObejct.offsetHeight) && 
+            (left + width >= gameObejct.offsetLeft && left <= gameObejct.offsetLeft + gameObejct.offsetWidth)) || 
+    //check if the new coords are not interrupting existing turnips
+    // -10 and +10 beacuse I want the new turnip spawn min 10px away from existing ones
+    (currentObjects.childNodes.forEach(turnipChild => { 
+        if(top + height - 100 >= turnipChild.offsetTop && top + 100 <= turnipChild.offsetTop + turnipChild.offsetHeight &&
+        left + width - 100 >= turnipChild.offsetLeft && left + 100 <= turnipChild.offsetLeft + turnipChild.offsetWidth) {
+            return true;
+        }
+    })) ) {
         console.log('nie', {top, left});
         top = Math.floor(getRandom(10, maxTop));
         left = Math.floor(getRandom(10, maxLeft));
@@ -82,6 +91,10 @@ function getNewTurnip() {
         turnip.remove();
     }, turipLifeDuration);
     currentObjects.appendChild(turnip);
+    
+    /*currentObjects.childNodes.forEach(turnipChild => {
+        console.log(turnipChild.offsetHeight);
+    });*/
 }
 
 //adding score after clicking on a turnip
