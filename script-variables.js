@@ -9,19 +9,29 @@ var score = 0;
 var perSecond = 0; //money added to score per second
 var perSecondIntervalTime = 1000;
 var perSecondIntervalId;
+
 var multiplierCost = 2; //what will be the cost of another update
 var multiplierPerSecond = 0.01; //multiplier of button values defining how much money per second will be added to score
+
 //min and max bonus for clicking on turnip picture
 var minBonus = 1; 
 var maxBonus = 2;
+
 //how long a turnip will be on the screen
 var minTuripLifeDuration = 5000;
 var maxTuripLifeDuration = 10000;
+
 //how fast a next turnip will be added to the screen
 var minTuripTimeout = 500;
 var maxTuripTimeout = 3000;
+
 //min width property of a turnip - it will be a random % from window width
 var minTurnipWidth = window.innerWidth;
+
+// how many re-tries to spawn turnip (if the position is invalid)
+var retryLimit = 30; 
+// how many turnips can be displayed at once
+var turnipLimit = 300;
 
 //an array of turnip drawings
 var turnipPictures = new Array(
@@ -30,5 +40,12 @@ var turnipPictures = new Array(
     "images/white_turnip.png"
 );
 
+// -------------- debug ----------------
+var testCollection = document.querySelector(".test-objects");
 
+var testTimeoutId;
+var testLifespan = 700;
+
+// debug stop snippet
+// clearTimeout(testTimoutId); retryLimit = 0;
 
