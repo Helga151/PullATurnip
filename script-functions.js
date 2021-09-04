@@ -3,12 +3,21 @@ function getRandom(min, max) {
     return Math.random() * (max - min) + min;
 }
 
-//defining what happen after clicking a button
-function search() {
+//defining what happen after clicking the clicker button
+function clickedClickerButton() {
+    let value = parseInt(this.classList[1]);
+    score += value;
+    //there has to be text update beacuse person can click more often than 200ms
+    scoreText.textContent = score; 
+}
+
+//defining what happen after clicking an update button
+function clickedUpdatePerSecond() {
     let value = parseInt(this.classList[1]);
     if (this.classList.contains('locked')) {
         if (score >= value) {
             score -= value;
+            
             //this.classList.remove('locked');
             this.classList.remove('to-unlock');
 
@@ -21,21 +30,16 @@ function search() {
             });
 
             perSecond += value * multiplierPerSecond;
-            perSecondText.textContent = perSecond.toFixed(1);
+            perSecond = parseFloat(perSecond.toFixed(1));
             perSecondIntervalTime = Math.round(1000 / perSecond);
 
             //interval adding money perSecond
             clearInterval(perSecondIntervalId);
             perSecondIntervalId = setInterval(() => {
                 score++;
-                scoreText.textContent = score;
             }, perSecondIntervalTime);
         }
     }
-    else {
-        score += value;
-    }
-    scoreText.textContent = score;
 }
 
 //rendering turnip on the screen
@@ -70,11 +74,11 @@ function getNewTurnip() {
             return true;
         }
     })) ) {
-        console.log('nie', {top, left});
+        //console.log('nie', {top, left});
         top = Math.floor(getRandom(10, maxTop));
         left = Math.floor(getRandom(10, maxLeft));
     }
-    console.log({top, left});
+    //console.log({top, left});
 
     turnip.style.top = `${top}px`;
     turnip.style.left = `${left}px`;
@@ -100,7 +104,6 @@ function getNewTurnip() {
 //adding score after clicking on a turnip
 function onClickAddScore() {
     score += Math.floor(getRandom(minBonus, maxBonus + 1));
-    scoreText.textContent = score;
     this.remove();
 }
 
@@ -111,15 +114,32 @@ function setRandomTurnipTimeout() {
     setTimeout(setRandomTurnipTimeout, timeout);
 }
 
+//restart the game
+function clickedRestartButton() {
+    score = 0;
+    perSecond = 0;
+    clearInterval(perSecondIntervalId);
+}
+
 //-----------------command lines-------------------------//
 
-setTimeout(setRandomTurnipTimeout, getRandom(500, 3000)); //show the first turnip
+//first to do after reloading the page <- adding score if per-second is non zero value
+clearInterval(perSecondIntervalId);
+if(perSecond > 0) {
+    perSecondIntervalId = setInterval(() => {
+        score++;
+    }, perSecondIntervalTime);
+}
 
+//show the first turnip
+setTimeout(setRandomTurnipTimeout, getRandom(500, 3000)); 
+
+//do after every 200ms
 setInterval(() => {
     document.title = `${score} money - Clicker`; //update title
     minTurnipWidth = window.innerWidth; //update this value in case window width was changed
     //check if any button can be updated
-    buttons.forEach(button => {
+    updateButtons.forEach(button => {
         var value = parseInt(button.classList[1]);
         if (button.classList.contains('locked')) {
             if (score >= value) {
@@ -129,6 +149,15 @@ setInterval(() => {
             }
         }
     });
-}, 100);
+    //add score and per-second to the local storage
+    localStorage.setItem('score', JSON.stringify(score));
+    localStorage.setItem('per-second', JSON.stringify(perSecond));
+    
+    //update text content
+    scoreText.textContent = score;
+    perSecondText.textContent = perSecond;
+}, 200);
 
-buttons.forEach(button => button.addEventListener('click', search));
+updateButtons.forEach(button => button.addEventListener('click', clickedUpdatePerSecond));
+clickerButton.addEventListener('click', clickedClickerButton);
+restartButton.addEventListener('click', clickedRestartButton);
