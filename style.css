@@ -45,16 +45,33 @@ h2 {
 }
 
 button {
+    display: inline-block;
     height: 50px;
     margin: 10px 0;
     box-shadow: 0 15px 45px 0 rgba(27, 36, 52, .15);
     font-family: 'Architects Daughter', cursive;
     font-size: 24px;
     font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
 }
 
-.clicking {
-    cursor: pointer;
+.clicker {
+
+}
+
+.restart {
+    background: transparent; 
+    border: 0;
+    width: auto;
+    margin: 10px 0 10px auto;
+    color: white;
+    font-size: 32px;
+    transition: all 0.5s;
+}
+
+.restart:hover {
+    background: red;
 }
 
 .family-member {
@@ -63,6 +80,7 @@ button {
 
 .locked {
     background: pink;
+    cursor: default;
 }
 
 .unlocked {

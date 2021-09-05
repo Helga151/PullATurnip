@@ -1,13 +1,19 @@
+//texts
 const scoreText = document.querySelector('.score-text');
-const buttons = document.querySelectorAll('.search');
-const costs = document.querySelectorAll('.cost');
 const perSecondText = document.querySelector('.per-second');
 const currentObjects = document.querySelector('.current-objects');
+//buttons
+const updateButtons = document.querySelectorAll('.update');
+const clickerButton = document.querySelector('.clicker');
+const restartButton = document.querySelector('.restart');
+//objects in buttons
+const costs = document.querySelectorAll('.cost');
+//other containers
 const gameObejct = document.querySelector('.game');
 
-var score = 0;
-var perSecond = 0; //money added to score per second
-var perSecondIntervalTime = 1000;
+var score = JSON.parse(localStorage.getItem('score')) || 0; //get score from the local storage or set 0 if ls is empty
+var perSecond = JSON.parse(localStorage.getItem('per-second')) || 0; //money added to score per second
+var perSecondIntervalTime = perSecond > 0 ? Math.round(1000 / perSecond) : 1000;
 var perSecondIntervalId;
 
 var multiplierCost = 2; //what will be the cost of another update
@@ -40,6 +46,9 @@ var turnipPictures = new Array(
     "images/white_turnip.png"
 );
 
+scoreText.textContent = score;
+perSecondText.textContent = perSecond.toFixed(1);
+
 // -------------- debug ----------------
 var testCollection = document.querySelector(".test-objects");
 
@@ -47,5 +56,5 @@ var testTimeoutId;
 var testLifespan = 700;
 
 // debug stop snippet
-// clearTimeout(testTimoutId); retryLimit = 0;
+//clearTimeout(testTimoutId); retryLimit = 0;
 

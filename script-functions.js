@@ -3,12 +3,21 @@ function getRandom(min, max) {
     return Math.random() * (max - min) + min;
 }
 
-//defining what happen after clicking a button
-function search() {
+//defining what happen after clicking the clicker button
+function clickedClickerButton() {
+    let value = parseInt(this.classList[1]);
+    score += value;
+    //there has to be text update beacuse person can click more often than 200ms
+    scoreText.textContent = score; 
+}
+
+//defining what happen after clicking an update button
+function clickedUpdatePerSecond() {
     let value = parseInt(this.classList[1]);
     if (this.classList.contains('locked')) {
         if (score >= value) {
             score -= value;
+            
             //this.classList.remove('locked');
             this.classList.remove('to-unlock');
 
@@ -21,21 +30,16 @@ function search() {
             });
 
             perSecond += value * multiplierPerSecond;
-            perSecondText.textContent = perSecond.toFixed(1);
+            perSecond = parseFloat(perSecond.toFixed(1));
             perSecondIntervalTime = Math.round(1000 / perSecond);
 
             //interval adding money perSecond
             clearInterval(perSecondIntervalId);
             perSecondIntervalId = setInterval(() => {
                 score++;
-                scoreText.textContent = score;
             }, perSecondIntervalTime);
         }
     }
-    else {
-        score += value;
-    }
-    scoreText.textContent = score;
 }
 
 // sleep for (time) miliseconds
@@ -59,28 +63,24 @@ function getNewTurnip() {
         //position of a turnip; to not touch the edges I took a 10px border
         let maxTop = Math.max(window.innerHeight - height - 10, 10);
         let maxLeft = Math.max(window.innerWidth - width - 10, 10);
-
         let top, left;
 
         // retry limit prevents browser to freeze if no spot is available
         // ie. in a small window
         for(let i = 0; i < retryLimit; ++i){
-            
             // positions
             top  = Math.floor(getRandom(10, maxTop));
             left = Math.floor(getRandom(10, maxLeft));
 
             // Check if the new position overlaps
-            if(
-                checkOverlaping(top, left, height, width, gameObejct) || // check if overlaps with game menu
-                checkTurnipOverlap(top, left, height, width, 0)          // check if overlaps with other turnips
-            ) {
-                console.log('nie', {top, left} );
+            if( checkOverlaping(top, left, height, width, gameObejct, 10) || // check if overlaps with game menu
+                checkTurnipOverlap(top, left, height, width, 10) ) {         // check if overlaps with other turnips
+                //console.log('nie', {top, left} );
                 //displayTestObject(top, left, height, width);
                 //await sleep(testLifespan + 5);
                 continue;
             }
-            console.log('tak', {top, left});
+            //console.log('tak', {top, left});
 
             turnip.style.top        = `${top}px`;
             turnip.style.left       = `${left}px`; 
@@ -107,7 +107,7 @@ function getNewTurnip() {
 }
 
 // check if any other turnip overlaps
-function checkTurnipOverlap(top, left, height, width, gap){
+function checkTurnipOverlap(top, left, height, width, gap = 10){
     // TODO: store current turnips in separate array - optimalization. 
     //        we cannot use currentObjects.childNodes since it contains text node
     //        which always returns true (overlaping)
@@ -122,7 +122,6 @@ function checkTurnipOverlap(top, left, height, width, gap){
 //adding score after clicking on a turnip
 function onClickAddScore() {
     score += Math.floor(getRandom(minBonus, maxBonus + 1));
-    scoreText.textContent = score;
     this.remove();
 }
 
@@ -136,7 +135,7 @@ function setRandomTurnipTimeout() {
 // Returns true if new object position described by (top, left, height, width)
 //     overlaps with existing (element). 
 // Optionally leave (gap) between elements
-function checkOverlaping(top, left, height, width, element, gap = 0){
+function checkOverlaping(top, left, height, width, element, gap = 10){
     
     let newTop      = top;
     let newBottom   = top + height + gap;
@@ -167,7 +166,7 @@ function checkOverlaping(top, left, height, width, element, gap = 0){
     let noOverlap = (newBottom < objTop) || // new is above element
                     (newTop > objBottom) || // new is below
                     (newRight < objLeft) || // new is left
-                    (newLeft > objRight)    // new is right
+                    (newLeft > objRight);   // new is right
 
     let result = !noOverlap;
     //console.log("Overlaping: ", result);
@@ -193,15 +192,31 @@ function displayTestObject(top, left, height, width){
     
 }
 
+//restart the game
+function clickedRestartButton() {
+    score = 0;
+    perSecond = 0;
+    clearInterval(perSecondIntervalId);
+}
+
 //-----------------command lines-------------------------//
 
 randomTurnipTimeoutId = setTimeout(setRandomTurnipTimeout, getRandom(500, 3000)); //show the first turnip
 
+//first to do after reloading the page <- adding score if per-second is non zero value
+clearInterval(perSecondIntervalId);
+if(perSecond > 0) {
+    perSecondIntervalId = setInterval(() => {
+        score++;
+    }, perSecondIntervalTime);
+}
+
+//do after every 200ms
 setInterval(() => {
     document.title = `${score} money - Clicker`; //update title
     minTurnipWidth = window.innerWidth; //update this value in case window width was changed
     //check if any button can be updated
-    buttons.forEach(button => {
+    updateButtons.forEach(button => {
         var value = parseInt(button.classList[1]);
         if (button.classList.contains('locked')) {
             if (score >= value) {
@@ -211,6 +226,15 @@ setInterval(() => {
             }
         }
     });
-}, 100);
+    //add score and per-second to the local storage
+    localStorage.setItem('score', JSON.stringify(score));
+    localStorage.setItem('per-second', JSON.stringify(perSecond));
+    
+    //update text content
+    scoreText.textContent = score;
+    perSecondText.textContent = perSecond;
+}, 200);
 
-buttons.forEach(button => button.addEventListener('click', search));
+updateButtons.forEach(button => button.addEventListener('click', clickedUpdatePerSecond));
+clickerButton.addEventListener('click', clickedClickerButton);
+restartButton.addEventListener('click', clickedRestartButton);
