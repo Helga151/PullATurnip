@@ -14,31 +14,28 @@ function clickedClickerButton() {
 //defining what happen after clicking an update button
 function clickedUpdatePerSecond() {
     let value = parseInt(this.classList[1]);
-    if (this.classList.contains('locked')) {
-        if (score >= value) {
-            score -= value;
-            
-            //this.classList.remove('locked');
-            this.classList.remove('to-unlock');
+    if (score >= value) {
+        score -= value;
+        console.log(this);
+        this.classList.remove('to-unlock');
 
-            //change cost of clicked element
-            this.classList.replace(value, value * multiplierCost);
-            costs.forEach(cost => {
-                if (cost.parentElement === this) {
-                    cost.textContent = value * multiplierCost;
-                }
-            });
+        //change cost of clicked element
+        this.classList.replace(value, value * multiplierCost);
+        costs.forEach(cost => {
+            if (cost.parentElement === this) {
+                cost.textContent = value * multiplierCost;
+            }
+        });
 
-            perSecond += value * multiplierPerSecond;
-            perSecond = parseFloat(perSecond.toFixed(1));
-            perSecondIntervalTime = Math.round(1000 / perSecond);
+        perSecond += value * multiplierPerSecond;
+        perSecond = parseFloat(perSecond.toFixed(1));
+        perSecondIntervalTime = Math.round(1000 / perSecond);
 
-            //interval adding money perSecond
-            clearInterval(perSecondIntervalId);
-            perSecondIntervalId = setInterval(() => {
-                score++;
-            }, perSecondIntervalTime);
-        }
+        //interval adding money perSecond
+        clearInterval(perSecondIntervalId);
+        perSecondIntervalId = setInterval(() => {
+            score++;
+        }, perSecondIntervalTime);
     }
 }
 
@@ -73,8 +70,10 @@ function getNewTurnip() {
             left = Math.floor(getRandom(10, maxLeft));
 
             // Check if the new position overlaps
-            if( checkOverlaping(top, left, height, width, gameObejct, 10) || // check if overlaps with game menu
-                checkTurnipOverlap(top, left, height, width, 10) ) {         // check if overlaps with other turnips
+            if( checkOverlaping(top, left, height, width, rightSection, 10)  || // check if overlaps with updates menu
+                checkOverlaping(top, left, height, width, infoContainer, 10) || // check if overlaps with info container
+                checkOverlaping(top, left, height, width, parting, 10)       || // check if overlaps with parting
+                checkTurnipOverlap(top, left, height, width, 10)             ){ // check if overlaps with other turnips
                 //console.log('nie', {top, left} );
                 //displayTestObject(top, left, height, width);
                 //await sleep(testLifespan + 5);
@@ -218,12 +217,10 @@ setInterval(() => {
     //check if any button can be updated
     updateButtons.forEach(button => {
         var value = parseInt(button.classList[1]);
-        if (button.classList.contains('locked')) {
-            if (score >= value) {
-                button.classList.add('to-unlock');
-            } else {
-                button.classList.remove('to-unlock');
-            }
+        if (score >= value) {
+            button.classList.add('to-unlock');
+        } else {
+            button.classList.remove('to-unlock');
         }
     });
     //add score and per-second to the local storage

@@ -10,6 +10,9 @@ const restartButton = document.querySelector('.restart');
 const costs = document.querySelectorAll('.cost');
 //other containers
 const gameObejct = document.querySelector('.game');
+const rightSection = document.querySelector('.right-section');
+const infoContainer = document.querySelector('.info-container');
+const parting = document.querySelector('.parting');
 
 var score = JSON.parse(localStorage.getItem('score')) || 0; //get score from the local storage or set 0 if ls is empty
 var perSecond = JSON.parse(localStorage.getItem('per-second')) || 0; //money added to score per second

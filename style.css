@@ -2,6 +2,8 @@ html {
     box-sizing: border-box;
     background-image: url("https://images.theconversation.com/files/275002/original/file-20190516-69195-1yg53ff.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1200&h=1200.0&fit=crop");
     font-family: 'Architects Daughter', cursive;
+    margin: 0;
+    padding: 0;
 }
 
 *,
@@ -10,17 +12,37 @@ html {
     box-sizing: inherit;
 }
 
+.page-container {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+}
+
+.left-section{
+    position: absolute;
+    overflow: hidden;
+    width: calc(100% - 360px);
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
 .game {
     display: flex;
-    flex-flow: column;
-    margin: 50px auto;
-    max-width: 700px;
-    box-shadow: 0 15px 45px 0 rgba(27, 36, 52, .15);
-    border-radius: 6px;
+    flex-flow: column; 
     padding: 20px;
-    background: rgba(186, 186, 186, 0.58);
-    text-align: justify;
+    text-align: center;
     align-content: center;
+    align-items: center;  
+    width: 100%;
+    height: 100%;
+}
+
+.info-container {
+    padding: 0;
+    margin: 0;
 }
 
 h1 {
@@ -28,6 +50,7 @@ h1 {
     color: white;
     font-size: 60px;
     margin: 15px 0 0;
+    text-shadow: 3px 3px 11px rgba(0,0,0,0.36);
 }
 
 h2 {
@@ -35,39 +58,87 @@ h2 {
     color: white;
     font-size: 40px;
     margin: 15px 0 15px;
+    text-shadow: 3px 3px 11px rgba(0,0,0,0.36);
 }
 
-.buttons {
+.clicker {
+    margin-top: 15px;
+    width: 350px;
+    border: 2px solid black;
+    text-shadow: 1px 1px 13px rgba(0,0,0,0.1);
+    transition: all 0.3s;
+}
+
+.clicker:hover {
+    font-size: 30px;
+}
+
+.turnip {
+    position: fixed;
+    z-index: 1;
+    background-size: cover; 
+    background-position: center;
+    cursor: pointer;
+}
+
+.parting {
+    position: absolute;
+    background-image: url(images/grass.jpg);
+    border-right: 2px solid black;
+    border-left: 2px solid black;
+    height: 100%;
+    width: 20px;
+    top: 0;
+    bottom: 0;
+    right: 350px;
+}
+
+.right-section {
+    position: absolute;
+    top: 0;
+    right: 0;
+    overflow: hidden;
+    background: rgba(186, 186, 186, 0.58);
+    height: 100%;
+    width: 350px;
+}
+
+.scroll_container {
+    height: 70%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    position: relative;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black; 
+    box-shadow: 0px 0px 12px 0px #000000;
+}
+
+.update_buttons {
+    margin: 0;
     display: flex;
     flex-flow: column;
-    margin: 0 auto;
-    width: 300px;
+    position: relative;
 }
 
 button {
     display: inline-block;
-    height: 50px;
-    margin: 10px 0;
-    box-shadow: 0 15px 45px 0 rgba(27, 36, 52, .15);
+    height: 90px;
     font-family: 'Architects Daughter', cursive;
-    font-size: 24px;
+    font-size: 28px;
     font-weight: 500;
     cursor: pointer;
     text-decoration: none;
-}
-
-.clicker {
-
+    border: 0;
 }
 
 .restart {
     background: transparent; 
     border: 0;
-    width: auto;
-    margin: 10px 0 10px auto;
+    margin: 10px 30%;
     color: white;
     font-size: 32px;
     transition: all 0.5s;
+    text-shadow: 3px 3px 11px rgba(0,0,0,0.36);
 }
 
 .restart:hover {
@@ -78,23 +149,21 @@ button {
    font-size: 30px; 
 }
 
-.locked {
-    background: pink;
+.update {
+    background-image: url(images/2wood_plank.jpg);
+    background-size: cover;
+    background-position: center;
     cursor: default;
-}
-
-.unlocked {
-    background: grey;
+    color: white;
+    text-shadow: 6px 4px 5px #000000;
 }
 
 .to-unlock {
     color: yellow;
     cursor: pointer;
+    transition: all 0.3s;
 }
 
-.turnip {
-    position: fixed;
-    background-size: cover; 
-    background-position: center;
-    cursor: pointer;
+.to-unlock:hover {
+    font-size: 30px;
 }
