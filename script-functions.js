@@ -33,9 +33,17 @@ function clickedUpdatePerSecond() {
 
         //interval adding money perSecond
         clearInterval(perSecondIntervalId);
-        perSecondIntervalId = setInterval(() => {
-            score++;
-        }, perSecondIntervalTime);
+        if(perSecondIntervalTime > 200) { //min interval is 200ms unless page lags
+            perSecondIntervalId = setInterval(() => {
+                score++;
+            }, perSecondIntervalTime);
+        }
+        else {
+            perSecondIntervalId = setInterval(() => {
+                score += parseFloat((perSecond / 5).toFixed(0)); // perSecond / 5 because 200ms is 1s / 5
+            }, 200);
+        }
+        
     }
 }
 
@@ -204,10 +212,15 @@ randomTurnipTimeoutId = setTimeout(setRandomTurnipTimeout, getRandom(500, 3000))
 
 //first to do after reloading the page <- adding score if per-second is non zero value
 clearInterval(perSecondIntervalId);
-if(perSecond > 0) {
+if(perSecondIntervalTime > 200) { //min interval is 200ms unless page lags
     perSecondIntervalId = setInterval(() => {
         score++;
     }, perSecondIntervalTime);
+}
+else {
+    perSecondIntervalId = setInterval(() => {
+        score += parseFloat((perSecond / 5).toFixed(0)); // perSecond / 5 because 200ms is 1s / 5
+    }, 200);
 }
 
 //do after every 200ms
