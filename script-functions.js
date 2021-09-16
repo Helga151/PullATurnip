@@ -21,11 +21,18 @@ function clickedUpdatePerSecond() {
 
         //change cost of clicked element
         this.classList.replace(value, value * multiplierCost);
-        costs.forEach(cost => {
-            if (cost.parentElement === this) {
-                cost.textContent = value * multiplierCost;
+        //length of a node list costs is the same as boughtIndexes
+        for(let i = 0; i < costs.length; i++) { 
+            if (costs[i].parentElement === this) {
+                costs[i].textContent = value * multiplierCost;
+                costsArray[i] = costs[i].textContent;
+                boughtIndexes[i].textContent = parseFloat(boughtIndexes[i].textContent) + 1;
+                boughtIndexesArray[i] = boughtIndexes[i].textContent;
+                //???JSON.stringify is needed???
+                localStorage.setItem('boughtIndexesArray', JSON.stringify(boughtIndexesArray));
+                localStorage.setItem('costsArray', JSON.stringify(costsArray));
             }
-        });
+        }
 
         perSecond += value * multiplierPerSecond;
         perSecond = parseFloat(perSecond.toFixed(1));

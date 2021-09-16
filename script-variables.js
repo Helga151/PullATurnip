@@ -8,11 +8,23 @@ const clickerButton = document.querySelector('.clicker');
 const restartButton = document.querySelector('.restart');
 //objects in buttons
 const costs = document.querySelectorAll('.cost');
+const boughtIndexes = document.querySelectorAll('.bought-index');
 //other containers
 const gameObejct = document.querySelector('.game');
 const rightSection = document.querySelector('.right-section');
 const infoContainer = document.querySelector('.info-container');
 const parting = document.querySelector('.parting');
+
+//array to store boughtIndexes text content, not the whole span
+var boughtIndexesArray = JSON.parse(localStorage.getItem('boughtIndexesArray')) || new Array(boughtIndexes.length).fill("0"); 
+var costsArray = new Array(costs.length); //array to store costs
+//if costsArray from local storage is not empty add it to costsArray variable
+if(JSON.parse(localStorage.getItem('costsArray'))) costsArray = JSON.parse(localStorage.getItem('costsArray'));
+else {
+    for(let i = 0; i < costs.length; i++) {
+        costsArray[i] = costs[i].textContent;
+    }
+}
 
 var score = JSON.parse(localStorage.getItem('score')) || 0; //get score from the local storage or set 0 if ls is empty
 var perSecond = JSON.parse(localStorage.getItem('per-second')) || 0; //money added to score per second
@@ -51,6 +63,10 @@ var turnipPictures = new Array(
 
 scoreText.textContent = score;
 perSecondText.textContent = perSecond.toFixed(1);
+for(let i = 0; i < boughtIndexes.length; i++) { 
+    boughtIndexes[i].textContent = boughtIndexesArray[i];
+    costs[i].textContent = costsArray[i];
+}
 
 // -------------- debug ----------------
 var testCollection = document.querySelector(".test-objects");

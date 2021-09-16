@@ -145,10 +145,6 @@ button {
     background: red;
 }
 
-.family-member {
-   font-size: 30px; 
-}
-
 .update {
     background-image: url(images/2wood_plank.jpg);
     background-size: cover;
@@ -165,5 +161,12 @@ button {
 }
 
 .to-unlock:hover {
+    font-size: 30px;
+}
+
+.bought-index {
+    float: right;
+    margin-right: 10px;
+    color: #b9b5b5;
     font-size: 30px;
 }
