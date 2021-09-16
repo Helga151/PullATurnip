@@ -13,14 +13,13 @@ function clickedClickerButton() {
 
 //defining what happen after clicking an update button
 function clickedUpdatePerSecond() {
-    let value = parseInt(this.classList[1]);
+    let value = parseInt(this.childNodes[1].textContent);
     if (score >= value) {
         score -= value;
-        console.log(this);
         this.classList.remove('to-unlock');
 
         //change cost of clicked element
-        this.classList.replace(value, value * multiplierCost);
+        //this.classList.replace(value, value * multiplierCost);
         //length of a node list costs is the same as boughtIndexes
         for(let i = 0; i < costs.length; i++) { 
             if (costs[i].parentElement === this) {
@@ -208,9 +207,9 @@ function displayTestObject(top, left, height, width){
 
 //restart the game
 function clickedRestartButton() {
-    score = 0;
-    perSecond = 0;
+    localStorage.clear();
     clearInterval(perSecondIntervalId);
+    location.reload();
 }
 
 //-----------------command lines-------------------------//
@@ -219,7 +218,7 @@ randomTurnipTimeoutId = setTimeout(setRandomTurnipTimeout, getRandom(500, 3000))
 
 //first to do after reloading the page <- adding score if per-second is non zero value
 clearInterval(perSecondIntervalId);
-if(perSecondIntervalTime > 200) { //min interval is 200ms unless page lags
+if(perSecondIntervalTime > 200 && perSecond > 0) { //min interval is 200ms unless page lags
     perSecondIntervalId = setInterval(() => {
         score++;
     }, perSecondIntervalTime);
@@ -236,7 +235,7 @@ setInterval(() => {
     minTurnipWidth = window.innerWidth; //update this value in case window width was changed
     //check if any button can be updated
     updateButtons.forEach(button => {
-        var value = parseInt(button.classList[1]);
+        var value = parseInt(button.childNodes[1].textContent);
         if (score >= value) {
             button.classList.add('to-unlock');
         } else {
@@ -252,6 +251,9 @@ setInterval(() => {
     perSecondText.textContent = perSecond;
 }, 200);
 
+/*for(var i = 0; i < updateButtons.length; i++) {
+    updateButtons[i].addEventListener('click', clickedUpdatePerSecond(i))
+}*/
 updateButtons.forEach(button => button.addEventListener('click', clickedUpdatePerSecond));
 clickerButton.addEventListener('click', clickedClickerButton);
 restartButton.addEventListener('click', clickedRestartButton);

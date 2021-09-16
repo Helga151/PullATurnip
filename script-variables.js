@@ -66,6 +66,7 @@ perSecondText.textContent = perSecond.toFixed(1);
 for(let i = 0; i < boughtIndexes.length; i++) { 
     boughtIndexes[i].textContent = boughtIndexesArray[i];
     costs[i].textContent = costsArray[i];
+    //updateButtons[i].classList[1].replace(10, costsArray[i]);
 }
 
 // -------------- debug ----------------
