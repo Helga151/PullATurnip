@@ -139,8 +139,9 @@ button {
     position: absolute;
     padding: 0;
     border: 0;
-    bottom: 5px;
+    margin-bottom: 5px;
     right: 50%;
+    bottom: 0;
     transform: translateX(50%);
     color: #ffffff;
     font-size: 35px;
