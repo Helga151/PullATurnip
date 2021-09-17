@@ -23,7 +23,7 @@ function clickedUpdatePerSecond() {
         //length of a node list costs is the same as boughtIndexes
         for(let i = 0; i < costs.length; i++) { 
             if (costs[i].parentElement === this) {
-                costs[i].textContent = value * multiplierCost;
+                costs[i].textContent = Math.ceil(value * multiplierCost);
                 costsArray[i] = costs[i].textContent;
                 boughtIndexes[i].textContent = parseFloat(boughtIndexes[i].textContent) + 1;
                 boughtIndexesArray[i] = boughtIndexes[i].textContent;
@@ -33,7 +33,7 @@ function clickedUpdatePerSecond() {
             }
         }
 
-        perSecond += value * multiplierPerSecond;
+        perSecond += parseFloat(this.classList[2]);
         perSecond = parseFloat(perSecond.toFixed(1));
         perSecondIntervalTime = Math.round(1000 / perSecond);
 

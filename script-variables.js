@@ -35,7 +35,7 @@ var perSecond = JSON.parse(localStorage.getItem('per-second')) || 0; //money add
 var perSecondIntervalTime = perSecond > 0 ? Math.round(1000 / perSecond) : 1000;
 var perSecondIntervalId;
 
-var multiplierCost = 2; //what will be the cost of another update
+var multiplierCost = 1.2; //what will be the cost of another update
 var multiplierPerSecond = 0.01; //multiplier of button values defining how much money per second will be added to score
 
 //min and max bonus for clicking on turnip picture
