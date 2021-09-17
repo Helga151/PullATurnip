@@ -6,6 +6,8 @@ const currentObjects = document.querySelector('.current-objects');
 const updateButtons = document.querySelectorAll('.update');
 const clickerButton = document.querySelector('.clicker');
 const restartButton = document.querySelector('.restart');
+const confirmFalseButton = document.querySelector('.confirm-false');
+const confirmTrueButton = document.querySelector('.confirm-true');
 //objects in buttons
 const costs = document.querySelectorAll('.cost');
 const boughtIndexes = document.querySelectorAll('.bought-index');
@@ -14,6 +16,8 @@ const gameObejct = document.querySelector('.game');
 const rightSection = document.querySelector('.right-section');
 const infoContainer = document.querySelector('.info-container');
 const parting = document.querySelector('.parting');
+const confirmation = document.querySelector('.confirmation');
+const darkBackground = document.querySelector('.dark-background');
 
 //array to store boughtIndexes text content, not the whole span
 var boughtIndexesArray = JSON.parse(localStorage.getItem('boughtIndexesArray')) || new Array(boughtIndexes.length).fill("0"); 

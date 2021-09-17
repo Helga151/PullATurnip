@@ -133,16 +133,19 @@ button {
 
 .restart {
     background: transparent; 
+    position: absolute;
     border: 0;
-    margin: 10px 30%;
-    color: white;
-    font-size: 32px;
-    transition: all 0.5s;
+    margin: 10px auto;
+    right: 50%;
+    transform: translateX(50%);
+    color: #ffffff;
+    font-size: 35px;
+    transition: all 0.2s;
     text-shadow: 3px 3px 11px rgba(0,0,0,0.36);
 }
 
 .restart:hover {
-    background: red;
+    color: #dddddd;
 }
 
 .update {
@@ -169,4 +172,77 @@ button {
     margin-right: 10px;
     color: #b9b5b5;
     font-size: 30px;
+}
+
+.confirmation
+{
+    display: none;
+    background-color: #eee;
+    border: 10px solid;
+    border-image-slice: 1;
+    border-width: 5px;
+    /*border-image-source: linear-gradient( 110.1deg,  rgba(34,126,34,1) 2.9%, rgba(168,251,60,1) 90.3% );*/
+    border-image-source: radial-gradient( circle 759px at -6.7% 50%,  rgba(80,131,73,1) 0%, rgba(140,209,131,1) 26.2%, rgba(178,231,170,1) 50.6%, rgba(144,213,135,1) 74.1%, rgba(75,118,69,1) 100.3% );
+    box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
+    margin: 0;
+    position: absolute;
+    width: 350px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 6px 8px 8px;
+    box-sizing: border-box;
+    text-align: center;
+    z-index: 100;
+}
+
+.confirmation .text-block {
+    /*border: 1px solid black;*/
+    padding: 15px;
+    margin: 5px;
+}
+
+.confirmation p {
+    font-size: 24px;
+    font-weight: 300;
+    letter-spacing: 2px;
+    margin: 0;
+    text-shadow: 2px 2px 7px rgba(65, 65, 65, 0.27);
+}
+
+.confirmation button {
+    background-color: #ebffeb;
+    display: inline-block;
+    border-radius: 5px;
+    border: 1px solid #aaa;
+    box-shadow: 0 0 7px 1px rgba(93, 93, 93, 0.3);
+    padding: 2px;
+    text-align: center;
+    width: 80px;
+    height: 40px;
+    cursor: pointer;
+    letter-spacing: 2px;
+    transition: 0.3s all;
+}
+         
+.confirmation button:hover {
+    background-color: #bdddbd;
+}
+
+.underline {
+    background: rgb(0,102,43);
+    background: radial-gradient(circle, rgba(0,102,43,1) 0%, rgba(19,170,82,1) 100%); 
+    border-radius: 5px;
+    height: 1px;
+    width: 90%;
+    margin: 6px auto;
+    position: relative;
+}
+
+.dark-background {
+    display: none;
+    position: absolute;
+    left: 0; top: 0; right: 0; bottom: 0;
+    z-index: 10; 
+    background: rgba(8, 8, 8, 0.5);
 }

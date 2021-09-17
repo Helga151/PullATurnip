@@ -205,11 +205,27 @@ function displayTestObject(top, left, height, width){
     
 }
 
-//restart the game
 function clickedRestartButton() {
-    localStorage.clear();
-    clearInterval(perSecondIntervalId);
-    location.reload();
+    confirmation.style.display = 'block';
+    darkBackground.style.display = 'block';
+    
+    //restart the game
+    confirmTrueButton.onclick = () => {
+        localStorage.clear();
+        clearInterval(perSecondIntervalId);
+        location.reload();
+    };
+    
+    //close confirm message
+    darkBackground.onclick = () => {
+        confirmation.style.display = 'none';
+        darkBackground.style.display = 'none';
+    };
+    
+    confirmFalseButton.onclick = () => {
+        confirmation.style.display = 'none';
+        darkBackground.style.display = 'none';
+    };
 }
 
 //-----------------command lines-------------------------//
@@ -251,9 +267,6 @@ setInterval(() => {
     perSecondText.textContent = perSecond;
 }, 200);
 
-/*for(var i = 0; i < updateButtons.length; i++) {
-    updateButtons[i].addEventListener('click', clickedUpdatePerSecond(i))
-}*/
 updateButtons.forEach(button => button.addEventListener('click', clickedUpdatePerSecond));
 clickerButton.addEventListener('click', clickedClickerButton);
 restartButton.addEventListener('click', clickedRestartButton);
